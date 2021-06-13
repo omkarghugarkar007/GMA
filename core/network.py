@@ -30,15 +30,10 @@ class RAFTGMA(nn.Module):
 
         self.hidden_dim = hdim = 128
         self.context_dim = cdim = 128
-        args.corr_levels = 4
-        args.corr_radius = 4
-
-        if 'dropout' not in self.args:
-            self.args.dropout = 0
 
         # feature network, context network, and update block
-        self.fnet = BasicEncoder(output_dim=256, norm_fn='instance', dropout=args.dropout)
-        self.cnet = BasicEncoder(output_dim=hdim + cdim, norm_fn='batch', dropout=args.dropout)
+        self.fnet = BasicEncoder(output_dim=256, norm_fn='instance', dropout=0)
+        self.cnet = BasicEncoder(output_dim=hdim + cdim, norm_fn='batch', dropout=0)
         self.update_block = GMAUpdateBlock(self.args, hidden_dim=hdim)
         self.att = Attention(args=self.args, dim=cdim, heads=self.args.num_heads, max_pos_size=160, dim_head=cdim)
 
